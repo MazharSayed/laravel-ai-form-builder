@@ -21,11 +21,14 @@ class FormBuilder extends Component
     public string $aiInstruction = '';
     public ?string $aiTrackingId = null;
 
+    public ?string $activeSectionId = null;
+
     public function mount(Form $form): void
     {
         $this->form = $form;
         $this->schema = $form->schema ?: ['version' => 1, 'sections' => []];
         $this->syncJsonFromSchema();
+        $this->activeSectionId = $this->schema['sections'][0]['id'] ?? null;
     }
 
     public function addField(string $sectionId, string $type): void
@@ -297,5 +300,10 @@ class FormBuilder extends Component
     public function render()
     {
         return view('livewire.form-builder');
+    }
+
+    public function setActiveSection(string $sectionId): void
+    {
+        $this->activeSectionId = $sectionId;
     }
 }

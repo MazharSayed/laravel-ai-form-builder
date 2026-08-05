@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Models\FormSubmission;
+use Illuminate\Support\Facades\Storage;
 
 class SubmissionController extends Controller
 {
@@ -33,5 +35,15 @@ class SubmissionController extends Controller
         return response()->streamDownload($callback, $filename, [
             'Content-Type' => 'text/csv',
         ]);
+    }
+
+    public function downloadFile(Form $form, FormSubmission $submission, string $fieldKey)
+    {
+        abort_unless($submission->form_id === $form->id, 404);
+
+        $path = $submission->data[$fieldKey] ?? null;
+        abort_unless($path && Storage::disk('local')->exists($path), 404);
+
+        return Storage::disk('local')->download($path);
     }
 }

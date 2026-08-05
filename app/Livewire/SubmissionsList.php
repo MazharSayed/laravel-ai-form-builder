@@ -38,9 +38,12 @@ class SubmissionsList extends Component
 
         $submissions = $query->paginate(20);
 
+        $fields = collect($this->form->flattenedFields());
+
         return view('livewire.submissions-list', [
             'submissions' => $submissions,
-            'fieldKeys' => collect($this->form->flattenedFields())->pluck('key')->all(),
+            'fieldKeys' => $fields->pluck('key')->all(),
+            'fileFieldKeys' => $fields->where('type', 'file')->pluck('key')->all(),
         ]);
     }
 }

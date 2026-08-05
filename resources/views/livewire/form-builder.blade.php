@@ -5,7 +5,7 @@
         <div class="grid grid-cols-2 gap-2">
             @foreach (['text','textarea','number','email','phone','date','dropdown','radio','checkbox','file','rating','section_heading'] as $type)
                 <button
-                    wire:click="addField('{{ $schema['sections'][0]['id'] ?? '' }}', '{{ $type }}')"
+                    wire:click="addField('{{ $activeSectionId }}', '{{ $type }}')"
                     class="text-xs border rounded px-2 py-2 hover:bg-gray-50 capitalize"
                 >{{ str_replace('_',' ', $type) }}</button>
             @endforeach
@@ -37,7 +37,8 @@
         <h3 class="font-semibold mb-3">Canvas</h3>
 
         @foreach ($schema['sections'] as $section)
-            <div class="mb-6 border rounded p-3">
+                <div class="mb-6 border rounded p-3 {{ $activeSectionId === $section['id'] ? 'ring-2 ring-indigo-300' : '' }}"
+                wire:click="setActiveSection('{{ $section['id'] }}')">
                 <input type="text" value="{{ $section['title'] }}"
                     wire:change="updateFieldProperty('{{ $section['id'] }}', '', 'title', $event.target.value)"
                     class="font-medium w-full border-b pb-1 mb-2" />

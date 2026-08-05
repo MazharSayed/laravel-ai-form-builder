@@ -49,23 +49,19 @@ class FormFill extends Component
     public function submit(): void
     {
         $this->form->refresh();
-
-        $input = $this->values;
-
-        foreach ($this->form->flattenedFields() as $field) {
-            if ($field['type'] === 'file' && !empty($input[$field['key']])) {
-                $upload = $input[$field['key']];
-                $input[$field['key']] = is_object($upload)
-                    ? $upload->store('submissions/' . $this->form->id, 'local')
-                    : $upload;
-            }
-        }
-
+        
         try {
-            $validated = app(FormSchemaValidator::class)->validateSubmission($this->form->schema, $input);
+            $validated = app(FormSchemaValidator::class)->validateSubmission($this->form->schema, $this->values);
         } catch (\Illuminate\Validation\ValidationException $e) {
             $this->errors2 = $e->errors();
             return;
+        }
+
+        // Only after validation passes, swap file objects for their stored paths.
+        foreach ($this->form->flattenedFields() as $field) {
+            if ($field['type'] === 'file' && !empty($validated[$field['key']]) && is_object($validated[$field['key']])) {
+                $validated[$field['key']] = $validated[$field['key']]->store('submissions/' . $this->form->id, 'local');
+            }
         }
 
         FormSubmission::create([

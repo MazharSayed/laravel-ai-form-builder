@@ -20,3 +20,5 @@ Route::livewire('/forms/{form}/submissions', SubmissionsList::class)->name('subm
 Route::get('/forms/{form}/submissions/export', [SubmissionController::class, 'exportCsv'])->name('submissions.export');
 
 Route::livewire('/f/{publicKey}', FormFill::class)->name('forms.public');
+
+Route::get('/forms/{form}/submissions/{submission}/file/{fieldKey}', [SubmissionController::class, 'downloadFile'])->name('submissions.download-file');
