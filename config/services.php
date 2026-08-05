@@ -34,10 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-    
+
     'ai' => [
         'api_key' => env('GEMINI_API_KEY'),
-        'model' => env('GEMINI_MODEL', 'gemini-2.5-flash'),
+        'model' => env('GEMINI_MODEL', 'gemini-3.5-flash-lite'),
         'max_retries' => env('AI_FORM_GEN_MAX_RETRIES', 2),
         'timeout' => env('AI_FORM_GEN_TIMEOUT', 60),
     ],
