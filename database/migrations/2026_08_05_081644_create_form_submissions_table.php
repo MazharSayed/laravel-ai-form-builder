@@ -10,7 +10,6 @@ return new class extends Migration
     {
         Schema::create('form_submissions', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
             $table->foreignId('form_id')->constrained('forms')->cascadeOnDelete();
             $table->unsignedInteger('form_schema_version');
             $table->json('data');

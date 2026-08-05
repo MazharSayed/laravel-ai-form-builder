@@ -10,7 +10,6 @@ return new class extends Migration
     {
         Schema::create('import_jobs', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
             $table->string('original_filename');
             $table->string('disk_path');
             $table->enum('type', ['docx', 'xlsx']);
