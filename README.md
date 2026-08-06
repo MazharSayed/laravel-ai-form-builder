@@ -226,7 +226,10 @@ engineering trade-offs made along the way.
 
 ---
 
-## Credits
+## Code documentation
 
-PhpWord, PhpSpreadsheet, Livewire, SortableJS (CDN), DataTables (CDN). AI calls
-go directly to the Gemini REST API via Laravel's HTTP client (no SDK dependency).
+Key files include inline comments explaining the logic and design decisions
+behind the code — particularly the schema validator, the AI generation service,
+the Livewire components (builder, fill, submissions, import), and the queued
+jobs. These are intended to make the reasoning behind each part easy to follow
+during review, and reflect the architectural choices described in DECISIONS.md.
