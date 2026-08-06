@@ -41,9 +41,10 @@ class SubmissionController extends Controller
     {
         abort_unless($submission->form_id === $form->id, 404);
 
+        $disk = config('app.upload_disk', 'local');
         $path = $submission->data[$fieldKey] ?? null;
-        abort_unless($path && Storage::disk('local')->exists($path), 404);
+        abort_unless($path && Storage::disk($disk)->exists($path), 404);
 
-        return Storage::disk('local')->download($path);
+        return \Storage::disk($disk)->download($path);
     }
 }

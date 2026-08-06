@@ -49,7 +49,7 @@ class FormFill extends Component
     public function submit(): void
     {
         $this->form->refresh();
-        
+
         try {
             $validated = app(FormSchemaValidator::class)->validateSubmission($this->form->schema, $this->values);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -60,7 +60,7 @@ class FormFill extends Component
         // Only after validation passes, swap file objects for their stored paths.
         foreach ($this->form->flattenedFields() as $field) {
             if ($field['type'] === 'file' && !empty($validated[$field['key']]) && is_object($validated[$field['key']])) {
-                $validated[$field['key']] = $validated[$field['key']]->store('submissions/' . $this->form->id, 'local');
+                $validated[$field['key']] = $validated[$field['key']]->store('submissions/' . $this->form->id, config('app.upload_disk', 'local'));
             }
         }
 
