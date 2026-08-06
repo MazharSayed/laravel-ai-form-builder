@@ -73,6 +73,12 @@
                                     <button class="text-green-600 hover:text-green-800 font-medium">Publish</button>
                                 </form>
                             @endif
+                            <form method="POST" action="{{ route('forms.destroy', $form) }}" class="inline"
+                                onsubmit="return confirm('Delete this form and all its submissions?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="text-red-600 hover:text-red-800">Delete</button>
+                            </form>
                         </div>
                     </div>
                 @endforeach

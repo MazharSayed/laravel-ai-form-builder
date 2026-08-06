@@ -29,3 +29,5 @@ Route::livewire('/imports', ImportForm::class)->name('imports.index');
 Route::post('/imports/{importJob}/commit', [FormController::class, 'commitImport'])->name('imports.commit');
 
 Route::post('/forms/{form}/toggle-publish', [FormController::class, 'togglePublish'])->name('forms.toggle-publish');
+
+Route::delete('/forms/{form}', [FormController::class, 'destroy'])->name('forms.destroy');

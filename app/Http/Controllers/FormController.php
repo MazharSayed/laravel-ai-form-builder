@@ -90,4 +90,10 @@ class FormController extends Controller
             ? 'Form published — public link is now live.'
             : 'Form unpublished.');
     }
+
+    public function destroy(Form $form)
+    {
+        $form->delete(); // soft-deletes (your Form model uses SoftDeletes)
+        return back()->with('status', 'Form deleted.');
+    }
 }
