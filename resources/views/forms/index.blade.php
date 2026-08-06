@@ -24,6 +24,10 @@
                            rounded-lg px-5 py-2.5 text-sm transition whitespace-nowrap">
                 ✨ Generate with AI
             </button>
+            <a href="{{ route('imports.index') }}"
+                class="inline-flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 font-medium mb-6">
+                    📄 Import from Word / Excel
+            </a>
         </form>
 
         @if (session('status'))
@@ -54,11 +58,20 @@
                                 {{ ucfirst($form->status) }}
                             </span>
                         </div>
-                        <div class="flex gap-4 text-sm">
+                        <div class="flex gap-4 text-sm items-center">
                             <a href="{{ route('forms.builder', $form) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
                             <a href="{{ route('submissions.index', $form) }}" class="text-gray-500 hover:text-gray-800">Submissions</a>
                             @if ($form->status === 'published')
                                 <a href="{{ $form->publicUrl() }}" target="_blank" class="text-gray-500 hover:text-gray-800">Public link</a>
+                                <form method="POST" action="{{ route('forms.toggle-publish', $form) }}" class="inline">
+                                    @csrf
+                                    <button class="text-yellow-600 hover:text-yellow-800">Unpublish</button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('forms.toggle-publish', $form) }}" class="inline">
+                                    @csrf
+                                    <button class="text-green-600 hover:text-green-800 font-medium">Publish</button>
+                                </form>
                             @endif
                         </div>
                     </div>

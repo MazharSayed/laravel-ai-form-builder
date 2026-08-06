@@ -6,6 +6,7 @@ use App\Http\Controllers\SubmissionController;
 use App\Livewire\FormBuilder;
 use App\Livewire\FormFill;
 use App\Livewire\SubmissionsList;
+use App\Livewire\ImportForm;
 
 Route::redirect('/', '/forms');
 
@@ -22,3 +23,9 @@ Route::get('/forms/{form}/submissions/export', [SubmissionController::class, 'ex
 Route::livewire('/f/{publicKey}', FormFill::class)->name('forms.public');
 
 Route::get('/forms/{form}/submissions/{submission}/file/{fieldKey}', [SubmissionController::class, 'downloadFile'])->name('submissions.download-file');
+
+Route::livewire('/imports', ImportForm::class)->name('imports.index');
+
+Route::post('/imports/{importJob}/commit', [FormController::class, 'commitImport'])->name('imports.commit');
+
+Route::post('/forms/{form}/toggle-publish', [FormController::class, 'togglePublish'])->name('forms.toggle-publish');
