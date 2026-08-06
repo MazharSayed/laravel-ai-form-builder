@@ -12,7 +12,7 @@ WORKDIR /app
 COPY . /app
 
 # Install PHP dependencies (production: no dev packages, optimized autoloader)
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --ignore-platform-reqs
 
 # Render injects $PORT at runtime. On boot: run migrations+seed against Aiven,
 # cache config/routes/views, then start the server bound to Render's port.
